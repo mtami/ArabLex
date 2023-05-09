@@ -17,7 +17,7 @@ st.set_page_config(
 )
 
 
-from word_distance import calculate_distance
+from similarity import calculate_similarity
 
 today = datetime.date.today()
 day_one = datetime.date(2023, 2, 1)
@@ -25,12 +25,12 @@ day_one = datetime.date(2023, 2, 1)
 
 def main():
     def comp_factory(val: int):
-        if val in range(0, 100):
-            return st.info
-        elif val in range(100, 1000):
+        if 0 < val <= 0.2:
+            return st.error
+        elif 0.2 < val <= 0.6:
             return st.warning
         else:
-            return st.error
+            return st.info
 
     def update_game_day():
         # make sure the user pick another date
@@ -46,7 +46,7 @@ def main():
         if user_query in user_queries:
             st.warning(f"The word {user_query} was already guessed.", icon="⚠️")
         else:
-            success, data = calculate_distance(day=game, word=user_query)
+            success, data = calculate_similarity(day=game, word=user_query)
             st.session_state.lookup[game]["query_history"].append(
                 {**data, **{"word": user_query}}
             )
@@ -54,7 +54,7 @@ def main():
             if success:
                 st.session_state.lookup[game]["guess"] += 1
                 guess_count = st.session_state.lookup[game]["guess"]
-                if data["distance"] == 0:
+                if float(data["similarity"]) == float(1):
                     st.success(
                         f"Congrats! You got the word in {guess_count} guesses", icon="✅"
                     )
@@ -122,12 +122,13 @@ def main():
 
     # sort words non-descending according to score
     st.session_state.lookup[game]["query_history"] = sorted(st.session_state.lookup[game]["query_history"],
-                                                            key=lambda query: query.get('distance', float('inf')))
+                                                            key=lambda query: query.get('similarity', float('-inf')),
+                                                            reverse=True)
     for query in st.session_state.lookup[game]["query_history"]:
-        if "distance" in query.keys():
+        if "similarity" in query.keys():
             word = query["word"]
-            distance = query["distance"]
-            comp_factory(distance)(f"{word}  #{distance}")
+            similarity = query["similarity"]
+            comp_factory(similarity)(f"{word}  #%{similarity*100}")
 
             # st.progress(q['distance'])
 
