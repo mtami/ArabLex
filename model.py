@@ -9,7 +9,7 @@ import gensim
 import tempfile
 
 
-@st.experimental_memo
+@st.cache_data
 def download_fastext():
     # Create a temporary directory
     temp_dir = tempfile.mkdtemp()
