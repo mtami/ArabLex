@@ -133,7 +133,7 @@ def main():
         if "similarity" in query.keys():
             word = query["word"]
             similarity = query["similarity"]
-            comp_factory(similarity)(f"{word}  #%{similarity*100:.2f}")
+            comp_factory(similarity)(f"{word}  {similarity*100:.2f}%")
 
             # st.progress(q['distance'])
 
