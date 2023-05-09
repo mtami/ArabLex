@@ -6,7 +6,7 @@ import streamlit as st
 
 
 # Clean/Normalize Arabic Text
-@st.experimental_memo
+@st.cache_data
 def clean_str(text):
     search = ["أ", "إ", "آ", "ة", "_", "-", "/", ".", "،", " و ", " يا ", '"', "ـ", "'", "ى", "\\", '\n', '\t',
               '&quot;', '?', '؟', '!']
@@ -35,7 +35,7 @@ def clean_str(text):
     return text
 
 
-@st.experimental_memo
+@st.cache_data
 def load_words() -> list[str]:
 
     credentials = {

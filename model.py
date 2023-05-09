@@ -1,8 +1,9 @@
-from tqdm import tqdm
-from utils import clean_str
 import torch
-from transformers import AutoTokenizer, AutoModel
 from scipy.spatial.distance import cosine as cosine_distance
+from tqdm import tqdm
+from transformers import AutoModel, AutoTokenizer
+
+from utils import clean_str
 
 
 class WordSimilarity:
@@ -47,6 +48,7 @@ class WordSimilarity:
 
     def top_k(self, word, k=10):
         self._build_word_similaritites(word)
-        top_similar_words = sorted(self.word_top_similar[word], key=lambda x: x[1], reverse=True)[:k]
+        top_similar_words = sorted(
+            self.word_top_similar[word], key=lambda x: x[1], reverse=True
+        )[:k]
         return top_similar_words
-
