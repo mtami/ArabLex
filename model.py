@@ -1,3 +1,4 @@
+import os
 from utils import clean_str
 import requests
 import gzip
@@ -20,6 +21,9 @@ def download_fastext():
         with open("cc.ar.300.bin", "wb") as f_out:
             shutil.copyfileobj(f_in, f_out)
 
+
+if not os.path.exists("./cc.ar.300.bin"):
+    download_fastext()
 
 model = gensim.models.fasttext.load_facebook_vectors('./cc.ar.300.bin')
 
