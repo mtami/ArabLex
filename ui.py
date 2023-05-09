@@ -84,14 +84,17 @@ def main():
         f"Day: #{game+1}  Guess: #{st.session_state.lookup[game]['guess']}"
     )
 
-    st.markdown("""
+    st.markdown(
+        """
     <style>
     input[aria-label="Guess"] {
       unicode-bidi:bidi-override;
       direction: RTL;
     }
     </style>
-        """, unsafe_allow_html=True)
+        """,
+        unsafe_allow_html=True,
+    )
 
     def clear_text():
         st.session_state.prev_user_query = st.session_state.user_query
@@ -121,9 +124,11 @@ def main():
             print(e)
 
     # sort words non-descending according to score
-    st.session_state.lookup[game]["query_history"] = sorted(st.session_state.lookup[game]["query_history"],
-                                                            key=lambda query: query.get('similarity', float('-inf')),
-                                                            reverse=True)
+    st.session_state.lookup[game]["query_history"] = sorted(
+        st.session_state.lookup[game]["query_history"],
+        key=lambda query: query.get("similarity", float("-inf")),
+        reverse=True,
+    )
     for query in st.session_state.lookup[game]["query_history"]:
         if "similarity" in query.keys():
             word = query["word"]
@@ -151,8 +156,8 @@ def main():
         ℹ️ How To Play?\n
         Find the secret word.
         You have unlimited guesses.
-        The words were sorted 
-        by an artificial intelligence algorithm 
+        The words were sorted
+        by an artificial intelligence algorithm
         according to how similar they were to the secret word.
         After submitting a word,
         you will see its position.

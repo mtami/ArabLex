@@ -1,6 +1,6 @@
 import datetime
 
-from model import WordSimilarity, get_similarity, get_top_k
+from model import get_similarity, get_top_k
 from utils import load_words
 
 start_date = datetime.date(2023, 2, 1)
@@ -36,4 +36,3 @@ def suggest_similar_word(day: int):
         SECRET_WORDS_TOP_K[secret_word] = top_k
     else:
         top_k = SECRET_WORDS_TOP_K[secret_word]
-

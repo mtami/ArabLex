@@ -1,12 +1,13 @@
-import os
-from utils import clean_str
-import requests
 import gzip
+import os
 import shutil
-import streamlit as st
-import gensim
-
 import tempfile
+
+import gensim
+import requests
+import streamlit as st
+
+from utils import clean_str
 
 
 @st.cache_data
